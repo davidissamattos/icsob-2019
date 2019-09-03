@@ -12,12 +12,7 @@ The MVP was used and evaluated in an experiment for 1 month, where it dynami-cal
 
 # The dynamic pricing system
 
-The deployed MVP and the daily steps for calculating the dynamic pricing are represented below. 
-
-![Process](process.png)
-*Representation of the set of activities executed daily for the dynamic pricing system. The dot-ted line divides what is part of the company internal systems (left) from the MVF (right).*
-
-We can divide the set of activities executed daily in the pricing system in eight sequential steps.
+The deployed MVP and the daily steps for calculating the dynamic pricing are represented below.  We can divide the set of activities executed daily in the pricing system in eight sequential steps (see figure).
 
 **Step 1:** The business analyst retrieves the product information of the previous day from the business intelligence tool. The data contains the features that are used in the forecasting and price optimization system, such as number of sold units, price, dis-count level (from the markdown period), average additional discounts (e.g. coupons), timestamp, number of web visualizations, etc.
 
@@ -27,7 +22,7 @@ We can divide the set of activities executed daily in the pricing system in eigh
 
 **Step 4:** After validating and processing, the data is saved in a database so it can be used for training and execution of the ML models.
 
-**Step 5:** For the product launch we used an ML model based on time series analy-sis called ARMA-X (Auto-Regressive Moving Average with eXogenous variables), based on the statsmodels  Python 3 library.
+**Step 5:** For the product launch we used an ML model based on time series analy-sis called ARMA-X (Auto-Regressive Moving Average with eXogenous variables), based on the statsmodels Python 3 library.
 
 **Step 6:** This step is concerned with the prediction of the sales. From our offline analysis, we observed that the prediction models were not precise for predicting more than 7 days. This observation restructed of the time window where the utility func-tion could be evaluated on the price optimization engine. We assumed that all predic-tion factors with exception of time-related factors (day of the week and month) and the price were constant and equal to the last day of data (often the previous day). The forecasting system predicts sales for all allowed price range (for most of the products between 10-50% discount). Since we need to perform this calculation daily, for all 49 products, and preferably in short time frame (as it is integrated manually), we opted to reduce the scope of the prediction to 5% discount steps. Therefore, we would fore-cast sales for only 8-12 price steps. This restriction in the MVP allows the system to run faster and without the complexity of integrating it with a mixed-integer linear solver.
 
@@ -35,6 +30,8 @@ We can divide the set of activities executed daily in the pricing system in eigh
 
 **Step 8:** In the last step, the business analyst takes the results of the price optimiza-tion engine and update the price specification in the e-commerce platform.
 
+![Process](process.png)
+*Representation of the set of activities executed daily for the dynamic pricing system. The dot-ted line divides what is part of the company internal systems (left) from the MVF (right).*
 
 # Analysis of the experiment
 
